@@ -8,7 +8,6 @@ require 'PHPMailer/src/Exception.php';
   use PHPMailer\PHPMailer\SMTP;
   use PHPMailer\PHPMailer\Exception;
 
-
   $mail = new PHPMailer(true);
   $mail->CharSet = 'UTF-8';
   $mail->isHTML(true);
@@ -21,19 +20,14 @@ require 'PHPMailer/src/Exception.php';
   $mail->Password   = 'Y0L3scgT0t8wGkF6';                               
   $mail->SMTPSecure = 'ssl';            
   $mail->Port       = 465; 
-
-  
   
   $name = $_POST['name'];
   $email = $_POST['email'];
   $phone = $_POST['phone'];
   $message = $_POST['message'];
 
-  
-
   $email_template = "template_mail.html";
   $body = file_get_contents($email_template);
-  
   
   $body = str_replace('%name%', $name, $body);
   $body = str_replace('%email%', $email, $body);
@@ -42,10 +36,9 @@ require 'PHPMailer/src/Exception.php';
 
   $theme = '[Заявка з форми]';
 
-
+  $mail->setLanguage('uk', 'PHPMailer/language/');
   $mail->setFrom("andrii.kuz@ukr.net", "Заявка з форми");
   $mail->addAddress("andrii.kuz@ukr.net");
-
 
   $mail->Subject = $theme;
   $mail->MsgHTML($body);
@@ -60,3 +53,4 @@ require 'PHPMailer/src/Exception.php';
   header("Content-type: application/json");
 
   echo json_encode($response);
+  ?>
